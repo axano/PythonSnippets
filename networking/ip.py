@@ -1,5 +1,20 @@
 import socket
 
-#works on LANs without an internet connection
+#Does NOT need routable net access or any connection at all.
+#Works even if all interfaces are unplugged from the network.
+#Does NOT need or even try to get anywhere else.
+#Works with NAT, public, private, external, and internal IP's
+#Pure Python 2( or 3) with no external dependencies.
+#Works on Linux, Windows, and OSX.
+
 def getLocalIp():
-    return((([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0])
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
