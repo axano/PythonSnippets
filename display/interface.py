@@ -19,3 +19,6 @@ def printWarning(message):
 
 def printError(message):
     print(bcolors.ERROR+"[ "+str(time.ctime())+" ] ERROR: "+message+bcolors.ENDC)
+    
+def printSuccess(message):
+    print(bcolors.OKGREEN+"[ "+str(time.ctime())+" ] SUCCESS: "+message+bcolors.ENDC)
