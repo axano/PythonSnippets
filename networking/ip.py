@@ -45,4 +45,4 @@ def getDefaultIfaceNameLinux():
                     continue
                 return iface
             except:
-                continu
+                continue
