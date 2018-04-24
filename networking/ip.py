@@ -18,3 +18,12 @@ def getLocalIp():
     finally:
         s.close()
     return IP
+
+
+
+#needs an network interface card name as parameter
+#returns the netmask in n.n.n.n form
+#tested in python 3.6
+#Tested on UNIX-like OS's
+def getNetmaskByNic(ifname):
+    return socket.inet_ntoa(fcntl.ioctl(socket.socket(socket.AF_INET, socket.SOCK_DGRAM), 35099, struct.pack(bytes('256s','utf-8'), bytes(ifname,'utf-8')))[20:24])
