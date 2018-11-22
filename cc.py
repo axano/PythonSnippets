@@ -116,7 +116,7 @@ have any other heavy applications open while running the code with this option.
 So make a KNN object now starting with some simple arguments and store it. 
 '''
 
-neigh = KNeighborsClassifier(n_neighbors=3, weights='uniform', p=2, metric='minkowski',n_jobs=-1)
+neigh = KNeighborsClassifier(n_neighbors=3, weights='uniform', p=2, metric='minkowski', n_jobs=-1)
 
 '''
 Use the KNN model to train on the df_train dataset. 
@@ -136,6 +136,8 @@ dfTest = dfTest.drop(['Class'], axis=1)
 print(dfTest.head())
 # Takes 30 s'
 prediction = neigh.predict(dfTest.values)
+# should return 492 fraud cases
+creditcardsDataframe['Class'].value_counts()
 print(prediction)
 print(type(prediction))
 '''
@@ -176,7 +178,10 @@ Note: The order of the columns can be set for the confusion_matrix.
       This will be random depending on the shuffling of the dataset!
 '''
 
-...
+#tn, fp, fn, tp = confusion_matrix(dfTest, prediction).ravel()
+confMatrix = confusion_matrix(dfTest, prediction)
+plt.plot(confMatrix)
+plt.show()
 
 '''
 Provide following plots and answer the questions in the comment block below:
@@ -196,9 +201,9 @@ our dataset, what prediction accuracy would we have ?
 '''
 
 '''
-1) 
-2)
+1) V#, amount and class
+2) due to the fact that we keep the time parameter, we could still resort the dataset based on time
 3)
-4)
+4) the accuracy will be less because we will compare every credit card transaction with less neighbours 
 5)
 '''
