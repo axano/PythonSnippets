@@ -15,7 +15,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 
 from sklearn.utils import shuffle
-
+#boolena masks matplot lib 
+#rescale preprocessing
+#
 '''
 The full creditcard dataset is avaiable. 
 The data is present in src -> data_ex. 
@@ -52,7 +54,7 @@ Note : Preprocessing functions from scikit-learn usually return a numpy array.
 '''
 # https://machinelearningmastery.com/prepare-data-machine-learning-python-scikit-learn/
 
-
+rescale
 '''
 It's best practice to randomly shuffle the rows of a dataset. Scikit-learn has all sorts of usefull 
 preprocessing functions. In the code below the function shuffle is used. Everytime it's called it returns a randomly
@@ -160,7 +162,8 @@ One has values from 0 to size of test dataset. Second array has integer values '
 
    => show the plot and check if everything is as expected.
 '''
-
+# use boolean masks for mat plot lib give it to indices with colors 
+# add labels
 plt.plot(prediction)
 plt.show()
 '''
@@ -179,6 +182,8 @@ Note: The order of the columns can be set for the confusion_matrix.
 '''
 
 #tn, fp, fn, tp = confusion_matrix(dfTest, prediction).ravel()
+# df test label column instead of full test
+# change labes to -1 and 1
 confMatrix = confusion_matrix(dfTest, prediction)
 plt.plot(confMatrix)
 plt.show()
