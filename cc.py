@@ -15,9 +15,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 
 from sklearn.utils import shuffle
-#boolena masks matplot lib 
-#rescale preprocessing
-#
+
 '''
 The full creditcard dataset is avaiable. 
 The data is present in src -> data_ex. 
@@ -36,7 +34,8 @@ Check if you succeeded by displaying the resulting dataframe.
 creditcardsDataframe.reset_index(drop=True, inplace=True)
 creditcardsDataframe = creditcardsDataframe.drop(['Time'], axis=1)
 print(creditcardsDataframe.head())
-
+headers = list(creditcardsDataframe)
+print(headers)
 
 '''
 This dataset was partly anonimized, only the columns Time and amount are original. 
@@ -45,6 +44,7 @@ Looking at the resulting dataframe of the previous codeblock:
 Is there any categorical/numerical data ? 
 
 What preprocessing can we do to this dataset ? 
+rescaling
 
 After answering these questions for yourself, 
 make a decision for your preprocessing step and execute this on the resulting dataframe of the previous codeblock.
@@ -53,8 +53,13 @@ Note : Preprocessing functions from scikit-learn usually return a numpy array.
        You can put the result back into a pandas dataframe and don't forget to add column names. 
 '''
 # https://machinelearningmastery.com/prepare-data-machine-learning-python-scikit-learn/
-
-rescale
+classes = creditcardsDataframe['Class']
+creditcardsDataframe = creditcardsDataframe.drop(['Class'], axis=1)
+scaler = MinMaxScaler(feature_range=(0, 1))
+creditcardsDataframe = pd.DataFrame(scaler.fit_transform(creditcardsDataframe))
+creditcardsDataframe['Class'] = classes
+creditcardsDataframe.columns = headers
+print(creditcardsDataframe.head())
 '''
 It's best practice to randomly shuffle the rows of a dataset. Scikit-learn has all sorts of usefull 
 preprocessing functions. In the code below the function shuffle is used. Everytime it's called it returns a randomly
@@ -139,8 +144,14 @@ print(dfTest.head())
 # Takes 30 s'
 prediction = neigh.predict(dfTest.values)
 # should return 492 fraud cases
-creditcardsDataframe['Class'].value_counts()
-print(prediction)
+
+print(creditcardsDataframe['Class'].value_counts())
+predictedDataframe = pd.DataFrame()
+predictedDataframe['Class'] = prediction
+# ## returns 125 fraud cases out of the 85441 entries !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# 30% of 492 = 147.6
+# by taking in consideration that the dataset is shuffled, this algo has done quite well.
+print(predictedDataframe['Class'].value_counts())
 print(type(prediction))
 '''
 It's time to make a visualization of the results. We will compare the results of the prediction versus the ground 
@@ -162,7 +173,7 @@ One has values from 0 to size of test dataset. Second array has integer values '
 
    => show the plot and check if everything is as expected.
 '''
-# use boolean masks for mat plot lib give it to indices with colors 
+# use boolean masks for mat plot lib give it to indices with colors
 # add labels
 plt.plot(prediction)
 plt.show()
