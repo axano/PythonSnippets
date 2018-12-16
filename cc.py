@@ -123,7 +123,7 @@ have any other heavy applications open while running the code with this option.
 So make a KNN object now starting with some simple arguments and store it. 
 '''
 
-neigh = KNeighborsClassifier(n_neighbors=3, weights='uniform', p=2, metric='minkowski', n_jobs=-1)
+neigh = KNeighborsClassifier(n_neighbors=1, weights='distance', p=2, metric='minkowski', n_jobs=-1)
 
 '''
 Use the KNN model to train on the df_train dataset. 
@@ -219,7 +219,11 @@ our dataset, what prediction accuracy would we have ?
 '''
 1) V#, amount and class
 2) due to the fact that we keep the time parameter, we could still resort the dataset based on time
-3)
+3) BEST : neigh = KNeighborsClassifier(n_neighbors=3, weights='distance', p=2, metric='minkowski', n_jobs=-1) 
+   2nd BEST: neigh = KNeighborsClassifier(n_neighbors=5, weights='uniform', p=2, metric='minkowski', n_jobs=-1) 
 4) the accuracy will be less because we will compare every credit card transaction with less neighbours 
+    testing the code with  neigh = KNeighborsClassifier(n_neighbors=1, weights='uniform', p=2, metric='minkowski', n_jobs=-1) returns 123 fraud cases wich is a little bit less than
+    128 that i got with neigh = KNeighborsClassifier(n_neighbors=5, weights='uniform', p=2, metric='minkowski', n_jobs=-1) 
+    I assume that this is due to the fact that i used the  weights='uniform' which gives more emphasis to the closest neighbours
 5)
 '''
